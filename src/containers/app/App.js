@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from '../../components/layout/header/Header.component';
 import Meals from '../../components/meals/Meals.component';
 import Cart from '../../components/cart/Cart.component';
+import CartProvider from '../../store/provider/Cart.provider';
 
 function App() {
 	const [isCartVisible, setIsCartVisible] = useState(false);
@@ -13,13 +14,13 @@ function App() {
 	};
 
 	return (
-		<>
-			<Cart active={isCartVisible} hideCart={hideCartHandler} />
-			<Header displayCart={displayCartHandler} />
+		<CartProvider>
+			{isCartVisible && <Cart onHideCart={hideCartHandler} />}
+			<Header onDisplayCart={displayCartHandler} />
 			<main>
 				<Meals />
 			</main>
-		</>
+		</CartProvider>
 	);
 }
 
