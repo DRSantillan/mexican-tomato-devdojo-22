@@ -6,8 +6,6 @@ const INITIAL_CART_STATE = {
 };
 
 const cartReducer = (state, action) => {
-	
-
 	if (action.type === 'ADD_ITEM_TO_CART') {
 		const updatedTotalAmount =
 			(state.totalAmount + action.item.price) * action.item.amount;
@@ -38,8 +36,7 @@ const cartReducer = (state, action) => {
 			item => item.id === action.id
 		);
 		const existingCartItem = state.items[existingCartItemIndex];
-		const updatedTotalAmount =
-			state.totalAmount - existingCartItem.price;
+		const updatedTotalAmount = state.totalAmount - existingCartItem.price;
 		let updatedCartItems;
 
 		if (existingCartItem.amount === 1) {
@@ -60,7 +57,10 @@ const cartReducer = (state, action) => {
 			totalAmount: updatedTotalAmount,
 		};
 	}
-
+	if (action.type === 'CLEAR_ITEMS_FROM_CART') {
+		
+		return INITIAL_CART_STATE;
+	}
 	return INITIAL_CART_STATE;
 };
 const CartProvider = ({ children }) => {
@@ -76,11 +76,16 @@ const CartProvider = ({ children }) => {
 		dispatchCartAction({ type: 'REMOVE_ITEM_FROM_CART', id });
 	};
 
+	const clearItemsFromCartHandler = () => {
+		dispatchCartAction({ type: 'CLEAR_ITEMS_FROM_CART' });
+	};
+
 	const cartContext = {
 		items: cartState.items,
 		totalAmount: cartState.totalAmount,
 		addItem: addItemToCartHandler,
 		removeItem: removeItemFromCartHandler,
+		clearCart: clearItemsFromCartHandler,
 	};
 	return (
 		<CartContext.Provider value={cartContext}>
