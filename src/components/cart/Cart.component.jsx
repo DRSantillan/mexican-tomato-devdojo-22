@@ -31,7 +31,7 @@ const Cart = ({ onHideCart }) => {
 	const submitOrderHandler = async orderData => {
 		setConfirmedOrder(true);
 		const response = await fetch(
-			'https://mexican-tomatoes-devdojo-22-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json',
+			`${process.env.REACT_APP_DB_URL}/orders.json`,
 			{
 				method: 'POST',
 				body: JSON.stringify({

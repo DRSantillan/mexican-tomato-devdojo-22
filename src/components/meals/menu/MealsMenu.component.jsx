@@ -13,7 +13,7 @@ const MealsMenu = () => {
 		const getMenuItems = async () => {
 			const menuItems = [];
 			const response = await fetch(
-				'https://mexican-tomatoes-devdojo-22-default-rtdb.asia-southeast1.firebasedatabase.app/menu.json'
+				`${process.env.REACT_APP_DB_URL}/menu.json`
 			);
 
 			if (!response.ok)
